@@ -7,7 +7,7 @@ import (
 	"scrape/domain"
 	"time"
 
-	"188.166.240.198/GAIUS/lib/logger"
+	"scrape/domain/logger"
 )
 
 const (

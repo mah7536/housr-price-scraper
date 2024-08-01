@@ -9,8 +9,9 @@ import (
 	"scrape/domain"
 	"time"
 
-	"188.166.240.198/GAIUS/lib/errorCode"
-	"188.166.240.198/GAIUS/lib/logger"
+	"scrape/domain/logger"
+
+	"scrape/domain/errorCode"
 )
 
 func (s *Scraper) GetNewItem() (code int, data []*domain.House, err error) {
@@ -20,14 +21,33 @@ func (s *Scraper) GetNewItem() (code int, data []*domain.House, err error) {
 		return
 	}
 	q := url.Values{}
-	q.Add("type", "2")
-	q.Add("shType", "list")
-	q.Add("section", "117")
-	q.Add("regionid", "8")
-	q.Add("shape", "3,4")
+	if s.DetailSetting.Type != "" {
+		q.Add("type", s.DetailSetting.Type)
+	}
+
+	if s.DetailSetting.ShType != "" {
+		q.Add("shType", s.DetailSetting.ShType)
+	}
+
+	if s.DetailSetting.Section != "" {
+		q.Add("section", s.DetailSetting.Section)
+	}
+	if s.DetailSetting.Regionid != "" {
+		q.Add("regionid", s.DetailSetting.Regionid)
+	}
+	if s.DetailSetting.Shape != "" {
+		q.Add("shape", s.DetailSetting.Shape)
+	}
+
+	if s.DetailSetting.Price != "" {
+		q.Add("price", s.DetailSetting.Price)
+	}
+
 	q.Add("timestamp", fmt.Sprintf("%d", time.Now().Unix()))
+	q.Add("order", "posttime_desc")
 	newReq.URL.RawQuery = q.Encode()
 	newReq.Header.Set("X-CSRF-TOKEN", s.XCSRFToken)
+	newReq.Header.Set("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36")
 
 	res, err := s.Client.Do(newReq)
 	if err != nil {

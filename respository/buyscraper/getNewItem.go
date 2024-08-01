@@ -8,8 +8,9 @@ import (
 	"net/url"
 	"scrape/domain"
 
-	"188.166.240.198/GAIUS/lib/errorCode"
-	"188.166.240.198/GAIUS/lib/logger"
+	"scrape/domain/errorCode"
+
+	"scrape/domain/logger"
 )
 
 func (s *BuyScraper) GetNewItem() (code int, data []*domain.House, err error) {

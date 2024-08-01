@@ -6,21 +6,29 @@ import (
 	"scrape/respository/cache"
 	"time"
 
-	"188.166.240.198/GAIUS/lib/errorCode"
-	"188.166.240.198/GAIUS/lib/logger"
+	"scrape/domain/errorCode"
+
+	"scrape/domain/logger"
 )
 
 type Usecase struct {
 	cache       *cache.Cache
 	scrapers    []domain.Scraper
-	NewItemChan chan *domain.House
+	receiver    []*Receiver
+	NewItemChan chan *domain.Item
 }
 
-func NewUsecase(cache *cache.Cache, scrapers ...domain.Scraper) *Usecase {
+type Receiver struct {
+	ChatId       int64
+	ReceiverType []string
+}
+
+func NewUsecase(cache *cache.Cache, receiver []*Receiver, scrapers ...domain.Scraper) *Usecase {
 	return &Usecase{
 		cache:       cache,
 		scrapers:    scrapers,
-		NewItemChan: make(chan *domain.House),
+		NewItemChan: make(chan *domain.Item),
+		receiver:    receiver,
 	}
 }
 
@@ -45,12 +53,25 @@ func (u *Usecase) Run() {
 							logger.Error(err)
 							continue
 						}
-						u.NewItemChan <- eachResult
+
+						for _, eachReceiver := range u.receiver {
+							for _, eachType := range eachReceiver.ReceiverType {
+								if eachScraper.GetSourceName() != eachType {
+									continue
+								}
+								u.NewItemChan <- &domain.Item{
+									ChatId: eachReceiver.ChatId,
+									House:  eachResult,
+								}
+							}
+						}
+
 					}
 					if code != errorCode.Success {
 						logger.Error(err)
 						continue
 					}
+
 				}
 				select {
 				case <-ticker.C:

@@ -5,7 +5,8 @@ import (
 	"scrape/config"
 	"scrape/delivery/telegram/lib"
 
-	"188.166.240.198/GAIUS/lib/logger"
+	"scrape/domain/logger"
+
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
 
@@ -18,11 +19,11 @@ func (server *TelegramServer) Start(message *tgbotapi.Update) (code int, res []t
 	if !message.Message.From.IsBot {
 		messageFromCheckBot := fmt.Sprintf(SomeOneTalkToBot, message.Message.From.LastName, message.Message.From.FirstName, message.Message.From.LanguageCode, message.Message.From.ID)
 		logger.Info(messageFromCheckBot)
-		server.SendMs(lib.NewCommonMessage(config.Member, lib.TypeInfo, "New Talker To Bot", messageFromCheckBot))
+		server.SendMs(lib.NewCommonMessage(config.Arther, lib.TypeInfo, "New Talker To Bot", messageFromCheckBot))
 	} else {
 		messageFromCheckBot := fmt.Sprintf(SomeOneTalkToBot+"(bot)", message.Message.From.LastName, message.Message.From.FirstName, message.Message.From.LanguageCode, message.Message.From.ID)
 		logger.Info(messageFromCheckBot)
-		server.SendMs(lib.NewCommonMessage(config.Member, lib.TypeInfo, "New Talker To Bot", messageFromCheckBot))
+		server.SendMs(lib.NewCommonMessage(config.Arther, lib.TypeInfo, "New Talker To Bot", messageFromCheckBot))
 	}
 
 	return

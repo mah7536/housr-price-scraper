@@ -3,8 +3,10 @@ package scraper
 import (
 	"net/http"
 
-	"188.166.240.198/GAIUS/lib/errorCode"
-	"188.166.240.198/GAIUS/lib/logger"
+	"scrape/domain/errorCode"
+
+	"scrape/domain/logger"
+
 	"github.com/PuerkitoBio/goquery"
 )
 
@@ -23,6 +25,8 @@ func (s *Scraper) GoSaleIndex() (code int, newReq *http.Request, err error) {
 		code = errorCode.Error
 		return
 	}
+
+	newReq.Header.Set("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36")
 
 	res, err := s.Client.Do(newReq)
 	if err != nil {

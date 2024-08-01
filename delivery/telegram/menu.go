@@ -4,7 +4,8 @@ import (
 	"scrape/delivery/telegram/lib"
 	"time"
 
-	"188.166.240.198/GAIUS/lib/selfTime"
+	"scrape/domain/selfTime"
+
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
 

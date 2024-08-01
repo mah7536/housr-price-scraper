@@ -7,8 +7,9 @@ import (
 	"scrape/domain"
 	"time"
 
-	"188.166.240.198/GAIUS/lib/errorCode"
-	"188.166.240.198/GAIUS/lib/logger"
+	"scrape/domain/errorCode"
+
+	"scrape/domain/logger"
 )
 
 const (
@@ -22,13 +23,22 @@ const (
 	Item591 = "https://sale.591.com.tw/home/search/list"
 )
 
+type DetailSetting struct {
+	Type     string
+	ShType   string
+	Section  string
+	Regionid string
+	Shape    string
+	Price    string
+}
 type Scraper struct {
-	Client     *http.Client
-	XCSRFToken string
-	Name       string
+	Client        *http.Client
+	XCSRFToken    string
+	Name          string
+	DetailSetting *DetailSetting
 }
 
-func NewScraper(name string) (code int, s domain.Scraper, err error) {
+func NewScraper(name string, detailSetting *DetailSetting) (code int, s domain.Scraper, err error) {
 	tr := &http.Transport{
 		MaxIdleConns:       10,
 		IdleConnTimeout:    30 * time.Second,
@@ -49,7 +59,8 @@ func NewScraper(name string) (code int, s domain.Scraper, err error) {
 			Timeout:   30 * time.Second,
 			Transport: tr,
 		},
-		XCSRFToken: "",
+		XCSRFToken:    "",
+		DetailSetting: detailSetting,
 	}
 
 	code, _, err = tmp.GoSaleIndex()
