@@ -22,14 +22,23 @@ const (
 	Item591 = "https://bff-house.591.com.tw/v1/web/sale/list"
 )
 
+type DetailSetting struct {
+	Type     string
+	ShType   string
+	Section  string
+	Regionid string
+	Shape    string
+	Price    string
+}
 type Scraper struct {
-	Client     *http.Client
-	XCSRFToken string
-	DeviceId   string
-	Name       string
+	Client        *http.Client
+	XCSRFToken    string
+	Name          string
+	DeviceId      string
+	DetailSetting *DetailSetting
 }
 
-func NewScraper(name string) (code int, s domain.Scraper, err error) {
+func NewScraper(name string, detailSetting *DetailSetting) (code int, s domain.Scraper, err error) {
 	tr := &http.Transport{
 		MaxIdleConns:       10,
 		IdleConnTimeout:    30 * time.Second,
@@ -50,7 +59,8 @@ func NewScraper(name string) (code int, s domain.Scraper, err error) {
 			Timeout:   30 * time.Second,
 			Transport: tr,
 		},
-		XCSRFToken: "",
+		XCSRFToken:    "",
+		DetailSetting: detailSetting,
 	}
 
 	code, _, err = tmp.GoSaleIndex()

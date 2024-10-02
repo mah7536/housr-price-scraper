@@ -145,7 +145,7 @@ func FormatMs(chatid int64, h *domain.House) (code int, data tgbotapi.MessageCon
 	content += fmt.Sprintf("主坪:%f\n", h.MainArea)
 	content += fmt.Sprintf("建坪:%f\n", h.Area)
 	content += fmt.Sprintf("屋齡:%d\n", h.HouseAge)
-	content += fmt.Sprintf("單價:%s\n", h.UnitPrice)
+	content += fmt.Sprintf("單價:%v\n", h.UnitPrice)
 	content += fmt.Sprintf("新po:%b\n", h.IsNew)
 	content += fmt.Sprintf("是否降價:%b\n", h.IsDownPrice)
 	content += fmt.Sprintf("刊登時間:%s\n", h.PostTime)

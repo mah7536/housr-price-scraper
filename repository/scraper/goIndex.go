@@ -32,6 +32,8 @@ func (s *Scraper) GoSaleIndex() (code int, newReq *http.Request, err error) {
 		return
 	}
 
+	newReq.Header.Set("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36")
+
 	res, err := s.Client.Do(newReq)
 	if err != nil {
 		logger.Error(err)

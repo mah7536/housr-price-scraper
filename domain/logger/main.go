@@ -27,20 +27,40 @@ func Info(info ...interface{}) {
 	log(InfoColor, info...)
 }
 
+func Infof(format string, a ...interface{}) {
+	log(InfoColor, fmt.Sprintf(format, a...))
+}
+
 func Notice(info ...interface{}) {
 	log(NoticeColor, info...)
+}
+
+func Noticef(format string, a ...interface{}) {
+	log(NoticeColor, fmt.Sprintf(format, a...))
 }
 
 func Warn(info ...interface{}) {
 	log(WarningColor, info...)
 }
 
+func Warnf(format string, a ...interface{}) {
+	log(WarningColor, fmt.Sprintf(format, a...))
+}
+
 func Error(info ...interface{}) {
 	log(ErrorColor, info...)
 }
 
+func Errorf(format string, a ...interface{}) {
+	log(ErrorColor, fmt.Sprintf(format, a...))
+}
+
 func Debug(info ...interface{}) {
 	log(DebugColor, info...)
+}
+
+func Debugf(format string, a ...interface{}) {
+	log(DebugColor, fmt.Sprintf(format, a...))
 }
 
 func log(colorType string, info ...interface{}) {

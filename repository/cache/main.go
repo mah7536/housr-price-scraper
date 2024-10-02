@@ -12,13 +12,13 @@ type Cache struct {
 	List  map[string]map[int]*domain.House
 }
 
-func NewCache(names ...string) (c *Cache) {
+func NewCache(scapers ...domain.Scraper) (c *Cache) {
 	c = &Cache{
 		mutex: sync.RWMutex{},
 		List:  make(map[string](map[int]*domain.House)),
 	}
-	for _, eachName := range names {
-		c.List[eachName] = make(map[int]*domain.House)
+	for _, each := range scapers {
+		c.List[each.GetSourceName()] = make(map[int]*domain.House)
 	}
 	return
 }

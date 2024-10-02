@@ -34,7 +34,28 @@ func main() {
 	}
 
 	logger.Info("start server .....")
-	code, s, err := scraper.NewScraper("591")
+	setting_daya := &scraper.DetailSetting{
+		Type:     "2",
+		ShType:   "list",
+		Section:  "117",
+		Regionid: "8",
+		Shape:    "3,4",
+	}
+	code, s_taya, err := scraper.NewScraper("591-大雅", setting_daya)
+	if code != errorCode.Success {
+		logger.Error(err)
+		os.Exit(2)
+	}
+
+	setting_taichung := &scraper.DetailSetting{
+		Type:     "2",
+		ShType:   "list",
+		Section:  "104",
+		Regionid: "8",
+		Shape:    "1,2",
+		Price:    "750_1000",
+	}
+	code, s_taichung, err := scraper.NewScraper("591-台中", setting_taichung)
 	if code != errorCode.Success {
 		logger.Error(err)
 		os.Exit(2)
@@ -45,15 +66,22 @@ func main() {
 		logger.Error(err)
 		os.Exit(2)
 	}
-	cache := cache.NewCache("591", "buy")
+	cache := cache.NewCache(s_taya, buyS, s_taichung)
 
-	usecase := usecase.NewUsecase(cache, s, buyS)
-
-	usecase.Run()
+	receivers := []*usecase.Receiver{
+		{
+			ChatId:       config.Member,
+			ReceiverType: []string{s_taya.GetSourceName(), buyS.GetSourceName()},
+		},
+	}
+	usecase := usecase.NewUsecase(cache, receivers, s_taya, buyS, s_taichung)
 
 	tg := telegram.NewTelegramServer(usecase)
 	go tg.RunServer()
 	go tg.RunJob()
+
+	usecase.Run()
+
 	logger.Info("server is running.....")
 
 	shutdown := make(chan os.Signal, 1)

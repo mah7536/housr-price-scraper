@@ -12,14 +12,19 @@ import (
 
 	"scrape/domain/errorCode"
 
-	"scrape/domain/errorhandler"
 	"scrape/domain/logger"
+
+	"scrape/domain/errorhandler"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
 
 var (
 	TelegramSys *TelegramServer
+)
+
+const (
+	maxRetryTimes = 2
 )
 
 type command struct {
@@ -96,17 +101,24 @@ func (server *TelegramServer) RunJob() {
 			}
 			time.Sleep(500 * time.Millisecond)
 		case newItem := <-server.usecase.NewItemChan:
-			code, content, err := lib.FormatMs(config.Member, newItem)
+			code, content, err := lib.FormatMs(newItem.ChatId, newItem.House)
 			if code != errorCode.Success {
 				logger.Error(err)
 				continue
 			}
-			// logger.Info(content)
-			_, err = server.mainBot.Send(content)
-			if err != nil {
-				logger.Error(err)
-				continue
+			leastRetryTimes := maxRetryTimes
+			for leastRetryTimes > 0 {
+				_, err = server.mainBot.Send(content)
+				if err != nil {
+					logger.Error(err)
+					time.Sleep(50 * time.Second)
+					leastRetryTimes -= 1
+					continue
+				}
+
+				leastRetryTimes = 0
 			}
+
 		}
 	}
 }

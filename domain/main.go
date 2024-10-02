@@ -8,8 +8,12 @@ const (
 	TimeLayout = "2006-01-02 15:04:05"
 )
 
+type Item struct {
+	ChatId int64 // 要通知的Id
+	*House
+}
+
 type House struct {
-	// Type        string  `josn:"type"`
 	HouseId     int     `json:"houseid"`
 	Kind        int     `json:"kind"`
 	KindName    string  `json:"kind_name"`
