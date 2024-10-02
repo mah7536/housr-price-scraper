@@ -4,7 +4,7 @@ import (
 	"scrape/domain"
 	"sync"
 
-	"188.166.240.198/GAIUS/lib/errorCode"
+	"scrape/domain/errorCode"
 )
 
 type Cache struct {

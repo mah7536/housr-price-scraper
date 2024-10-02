@@ -4,8 +4,12 @@ import "time"
 
 type TimeStamp time.Time
 
+const (
+	TimeLayout = "2006-01-02 15:04:05"
+)
+
 type House struct {
-	Type        string  `josn:"type"`
+	// Type        string  `josn:"type"`
 	HouseId     int     `json:"houseid"`
 	Kind        int     `json:"kind"`
 	KindName    string  `json:"kind_name"`
@@ -18,25 +22,25 @@ type House struct {
 	MainArea    float32 `json:"mainarea"`
 	Area        float32 `json:"area"`
 	// PhotoNum     string `json:"photoNum"`
-	RefreshTime   string     `json:"refreshtime"`
-	PhotoUrl      string     `json:"photo_url"`
-	NickName      string     `json:"nick_name"`
-	HouseType     int        `json:"housetype"`
-	IsNew         int        `json:"isnew"`
-	PostTime      *TimeStamp `json:"posttime"`
-	HouseAge      int        `json:"houseage"`
-	Address       string     `json:"address"`
-	UnitPrice     string     `json:"unitprice"`
-	Price         int        `json:"price"`
-	IsDownPrice   int        `json:"is_down_price"`
-	IsHurryPrice  int        `json:"is_hurry_price"`
-	CommunityLink string     `json:"community_link"`
-	Url           string     `json:"url"`
+	RefreshTime   interface{} `json:"refreshtime"`
+	PhotoUrl      string      `json:"photo_url"`
+	NickName      string      `json:"nick_name"`
+	HouseType     int         `json:"housetype"`
+	IsNew         int         `json:"isnew"`
+	PostTime      *TimeStamp  `json:"posttime"`
+	HouseAge      int         `json:"houseage"`
+	Address       string      `json:"address"`
+	UnitPrice     interface{} `json:"unitprice"`
+	Price         int         `json:"price"`
+	IsDownPrice   int         `json:"is_down_price"`
+	IsHurryPrice  int         `json:"is_hurry_price"`
+	CommunityLink string      `json:"community_link"`
+	Url           string      `json:"url"`
 }
 
 type Data struct {
 	HouseList []*House `json:"house_list"`
-	Total     string   `json:"total"`
+	Total     int      `json:"total"`
 }
 
 type Res struct {

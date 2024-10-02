@@ -6,7 +6,7 @@ import (
 	"scrape/domain"
 	"strings"
 
-	"188.166.240.198/GAIUS/lib/errorCode"
+	"scrape/domain/errorCode"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )

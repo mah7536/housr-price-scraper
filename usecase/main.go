@@ -3,11 +3,11 @@ package usecase
 import (
 	"fmt"
 	"scrape/domain"
-	"scrape/respository/cache"
+	"scrape/repository/cache"
 	"time"
 
-	"188.166.240.198/GAIUS/lib/errorCode"
-	"188.166.240.198/GAIUS/lib/logger"
+	"scrape/domain/errorCode"
+	"scrape/domain/logger"
 )
 
 type Usecase struct {

@@ -10,10 +10,11 @@ import (
 	"scrape/usecase"
 	"strings"
 
-	"188.166.240.198/GAIUS/lib/errorCode"
+	"scrape/domain/errorCode"
 
-	"188.166.240.198/GAIUS/lib/errorhandler"
-	"188.166.240.198/GAIUS/lib/logger"
+	"scrape/domain/errorhandler"
+	"scrape/domain/logger"
+
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
 
@@ -100,6 +101,7 @@ func (server *TelegramServer) RunJob() {
 				logger.Error(err)
 				continue
 			}
+			// logger.Info(content)
 			_, err = server.mainBot.Send(content)
 			if err != nil {
 				logger.Error(err)

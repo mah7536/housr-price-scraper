@@ -8,12 +8,13 @@ import (
 	"net/url"
 	"scrape/domain"
 
-	"188.166.240.198/GAIUS/lib/errorCode"
-	"188.166.240.198/GAIUS/lib/logger"
+	"scrape/domain/errorCode"
+
+	"scrape/domain/logger"
 )
 
 func (s *BuyScraper) GetNewItem() (code int, data []*domain.House, err error) {
-	baseUrl, err := url.Parse(fmt.Sprintf(IndexUrl, "台中市", "大雅區", "透天-別墅"))
+	baseUrl, err := url.Parse(fmt.Sprintf(IndexUrl, "台中市", "西屯區"))
 	if err != nil {
 		code = errorCode.Error
 		return

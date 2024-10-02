@@ -4,7 +4,8 @@ import (
 	"scrape/delivery/telegram/lib"
 	"time"
 
-	"188.166.240.198/GAIUS/lib/selfTime"
+	"scrape/domain"
+
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
 
@@ -20,7 +21,7 @@ func MenuList(message *tgbotapi.Update) (code int, res tgbotapi.MessageConfig, e
 
 	res.ReplyMarkup = tgbotapi.NewInlineKeyboardMarkup(
 		tgbotapi.NewInlineKeyboardRow(
-			tgbotapi.NewInlineKeyboardButtonData("Current time", time.Now().Format(selfTime.TimeLayout)),
+			tgbotapi.NewInlineKeyboardButtonData("Current time", time.Now().Format(domain.TimeLayout)),
 			tgbotapi.NewInlineKeyboardButtonURL("Official Site", "https://www.gaiusauto.com/"),
 			tgbotapi.NewInlineKeyboardButtonSwitch("switch_inline_query(1,3)", "cmd"),
 			tgbotapi.InlineKeyboardButton{

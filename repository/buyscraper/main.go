@@ -7,11 +7,11 @@ import (
 	"scrape/domain"
 	"time"
 
-	"188.166.240.198/GAIUS/lib/logger"
+	"scrape/domain/logger"
 )
 
 const (
-	IndexUrl = "https://buy.houseprice.tw/ws/list/%s_city/%s_zip/%s_type/"
+	IndexUrl = "https://buy.houseprice.tw/ws/list/%s_city/%s_zip"
 )
 
 type BuyScraper struct {

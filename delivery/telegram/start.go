@@ -5,7 +5,8 @@ import (
 	"scrape/config"
 	"scrape/delivery/telegram/lib"
 
-	"188.166.240.198/GAIUS/lib/logger"
+	"scrape/domain/logger"
+
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
 

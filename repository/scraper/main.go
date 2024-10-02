@@ -7,8 +7,8 @@ import (
 	"scrape/domain"
 	"time"
 
-	"188.166.240.198/GAIUS/lib/errorCode"
-	"188.166.240.198/GAIUS/lib/logger"
+	"scrape/domain/errorCode"
+	"scrape/domain/logger"
 )
 
 const (
@@ -19,12 +19,13 @@ const (
 	Union591  = "https://union.591.com.tw"
 	Double591 = "https://doubleclick.net"
 
-	Item591 = "https://sale.591.com.tw/home/search/list"
+	Item591 = "https://bff-house.591.com.tw/v1/web/sale/list"
 )
 
 type Scraper struct {
 	Client     *http.Client
 	XCSRFToken string
+	DeviceId   string
 	Name       string
 }
 

@@ -3,10 +3,18 @@ package scraper
 import (
 	"net/http"
 
-	"188.166.240.198/GAIUS/lib/errorCode"
-	"188.166.240.198/GAIUS/lib/logger"
+	"scrape/domain/errorCode"
+	"scrape/domain/logger"
+
 	"github.com/PuerkitoBio/goquery"
 )
+
+type SaleIndex struct {
+	Status int `json:"status"`
+	Data   struct {
+		DeviceId string `json:"device_id"`
+	} `json:"data"`
+}
 
 func (s *Scraper) GoIndex() (code int, newReq *http.Request, err error) {
 	newReq, err = http.NewRequest(http.MethodGet, Www591, nil)
@@ -42,6 +50,8 @@ func (s *Scraper) GoSaleIndex() (code int, newReq *http.Request, err error) {
 		logger.Error("not found")
 		return
 	}
+
 	s.XCSRFToken = sr
+	s.DeviceId = ""
 	return
 }
